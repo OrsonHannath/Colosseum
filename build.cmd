@@ -122,7 +122,15 @@ REM //---------- Build rpclib ------------
 IF NOT EXIST external\rpclib\%RPC_VERSION_FOLDER%\build mkdir external\rpclib\%RPC_VERSION_FOLDER%\build
 cd external\rpclib\%RPC_VERSION_FOLDER%\build
 CALL :printHeader, "Configuring CMake rpclib"
-cmake -G"Visual Studio 17 2022" ..
+set VS2022_INSTANCE=C:\Program Files\Microsoft Visual Studio\2022\Community
+
+if exist "%VS2022_INSTANCE%" (
+    cmake -G "Visual Studio 17 2022" ^
+      -DCMAKE_GENERATOR_INSTANCE="%VS2022_INSTANCE%" ..
+) else (
+    cmake -G "Visual Studio 17 2022" ..
+)
+
 ECHO(
 
 if %buildMode% == "" (
